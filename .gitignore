@@ -60,3 +60,22 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+
+# DC migration — exclude SJC legacy + scratch
+.git.SJC-legacy.backup/
+_old_wrapper/
+.docs_inner_backup/
+.idea/
+*.csv
+*.sql
+convert_mapdata.py
+infra_migration.sql
+docs/
+screenshots/
+
+# Secrets
+*.mobileprovision
+*.p12
+*.p8
+.env
+.env.*
