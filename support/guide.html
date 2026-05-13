@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BikeMap DC — User Guide</title>
+<style>
+  :root {
+    --green: #1F8C33;
+    --green-soft: rgba(31,140,51,0.12);
+    --ink: #1a1a1a;
+    --muted: #5b6470;
+    --line: #e5e7eb;
+    --bg: #f7f8fa;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink); background: var(--bg);
+  }
+  header { background: white; border-bottom: 1px solid var(--line); padding: 28px 24px; }
+  header .wrap { max-width: 760px; margin: 0 auto; display: flex; align-items: center; gap: 16px; }
+  header img { width: 64px; height: 64px; border-radius: 12px; }
+  header h1 { margin: 0; font-size: 24px; }
+  header p { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
+  nav.toc {
+    max-width: 760px; margin: 16px auto 0; padding: 0 24px;
+  }
+  nav.toc ul {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  nav.toc a {
+    display: inline-block;
+    padding: 6px 12px;
+    background: white; border: 1px solid var(--line);
+    border-radius: 18px;
+    color: var(--green);
+    font-size: 13px; font-weight: 500;
+    text-decoration: none;
+  }
+  nav.toc a:hover { background: var(--green-soft); }
+  main { max-width: 760px; margin: 0 auto; padding: 24px; }
+  section {
+    background: white; border-radius: 14px;
+    padding: 22px 24px; margin-bottom: 18px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    scroll-margin-top: 12px;
+  }
+  h2 { margin: 0 0 14px; font-size: 20px; }
+  h3 { margin: 22px 0 6px; font-size: 16px; color: var(--green); }
+  p, li { color: var(--ink); }
+  ul { padding-left: 22px; margin: 8px 0; }
+  a { color: var(--green); text-decoration: none; font-weight: 500; }
+  a:hover { text-decoration: underline; }
+  code {
+    background: var(--green-soft); color: var(--green);
+    padding: 1px 6px; border-radius: 4px;
+    font: 13px/1.4 ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  .legend {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px;
+    margin: 8px 0;
+  }
+  .legend div {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 0; font-size: 14px;
+  }
+  .legend .swatch {
+    flex-shrink: 0;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: white; border: 1px solid #1a1a1a;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+  .line-row {
+    display: flex; align-items: center; gap: 12px; padding: 6px 0;
+  }
+  .line {
+    flex-shrink: 0; width: 56px; height: 4px; border-radius: 2px;
+  }
+  .dot { width: 8px; height: 4px; border-radius: 2px; margin-right: 2px; }
+  .tip {
+    border-left: 3px solid var(--green);
+    background: var(--green-soft);
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+    font-size: 14px;
+    margin: 10px 0;
+  }
+  footer { text-align: center; color: var(--muted); font-size: 13px; padding: 20px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <img src="logo.png" alt="BikeMap DC logo" onerror="this.style.display='none'">
+    <div>
+      <h1>BikeMap DC — User Guide</h1>
+      <p>Everything you need to ride the District smarter</p>
+    </div>
+  </div>
+</header>
+
+<nav class="toc">
+  <ul>
+    <li><a href="#welcome">Welcome</a></li>
+    <li><a href="#start">Getting started</a></li>
+    <li><a href="#legend">Reading the map</a></li>
+    <li><a href="#find">Finding stuff</a></li>
+    <li><a href="#contrib">Contributing</a></li>
+    <li><a href="#account">Your account</a></li>
+    <li><a href="#notifs">Notifications</a></li>
+    <li><a href="#mod">For moderators</a></li>
+    <li><a href="#tips">Tips & tricks</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<section id="welcome">
+  <h2>Welcome to BikeMap DC</h2>
+  <p>
+    BikeMap DC is a community-powered cycling map for the Washington, D.C. metro
+    area. It pulls together everything a cyclist needs to plan a trip, find a
+    parking rack, fix a flat, or report a problem — all in one place, on your phone.
+  </p>
+  <p>What you'll find on the map:</p>
+  <ul>
+    <li>5,500+ bike-infrastructure segments — protected lanes, bike lanes,
+      contraflow lanes, bus/bike lanes, shared lanes, signed routes, off-street
+      trails, unpaved trails, and mountain-bike trails.</li>
+    <li>5,700+ points of interest — bike parking, Capital Bikeshare stations,
+      fix-it stands, bike shops, water fountains, public restrooms, Metro
+      stations, commuter-rail stops, recreation centers, and landmarks.</li>
+    <li>1,700+ cyclist crash locations from the past 4 years (MPD Vision Zero).</li>
+    <li>Your fellow cyclists' contributions — bike thefts, new fix-it stands,
+      recent accidents.</li>
+  </ul>
+  <p>
+    <strong>Coverage area:</strong> DC + Bethesda · Silver Spring · Tysons ·
+    McLean · Arlington · Falls Church · Alexandria · Capitol Heights ·
+    College Park · Hyattsville · New Carrollton · Suitland.
+  </p>
+</section>
+
+<section id="start">
+  <h2>Getting started</h2>
+
+  <h3>Create your account</h3>
+  <ol>
+    <li>Open the app.</li>
+    <li>Tap <strong>Create account</strong>.</li>
+    <li>Pick a username and a password (at least 6 characters).</li>
+    <li>Choose one of our 10 DC-fauna avatars — bobcat, cardinal, crow, eagle,
+      fox, otter, owl, raccoon, skunk, or squirrel.</li>
+    <li>Tap <strong>Create account</strong>. You're in.</li>
+  </ol>
+
+  <h3>Sign in</h3>
+  <p>Use the email and password you registered with. Tap the eye icon to reveal
+  your password if you need to check it.</p>
+  <p>Forgot your password? Tap <strong>Forgot my password</strong> and we'll
+  email a reset link.</p>
+</section>
+
+<section id="legend">
+  <h2>Reading the map</h2>
+
+  <h3>The 9 cycle-route line styles</h3>
+  <p>Open the legend at any time by tapping the hamburger icon (top-left).
+  Each route type has a distinct color and dash style:</p>
+
+  <div class="line-row"><span class="line" style="background:#1F8C33;height:5px"></span><strong>Protected Bike Lane</strong> — separated by a curb or barrier.</div>
+  <div class="line-row"><span class="line" style="background:#1a1a1a;height:4px"></span><strong>Bike Lane</strong> — painted dedicated lane on the road.</div>
+  <div class="line-row"><span class="line" style="background:#333;height:4px;background-image:linear-gradient(90deg,#333 50%,transparent 0);background-size:6px 4px"></span><strong>Contraflow Lane</strong> — bikes go against the one-way flow.</div>
+  <div class="line-row"><span class="line" style="background:#404040;height:4px;background-image:linear-gradient(90deg,#404040 50%,transparent 0);background-size:10px 4px"></span><strong>Bus/Bike Lane</strong> — shared with transit buses.</div>
+  <div class="line-row"><span class="line" style="background:#333;height:3px;background-image:linear-gradient(90deg,#333 50%,transparent 0);background-size:14px 3px"></span><strong>Shared Lane (Sharrow)</strong> — pavement arrows; cyclist may take the lane.</div>
+  <div class="line-row"><span class="line" style="background:#595959;height:2px;background-image:radial-gradient(circle,#595959 1px,transparent 1.5px);background-size:6px 2px"></span><strong>On-Street Signed Route</strong> — marked with signs only.</div>
+  <div class="line-row"><span class="line" style="background:#73C273;height:5px"></span><strong>Off-Street Trail</strong> — paved multi-use path.</div>
+  <div class="line-row"><span class="line" style="background:#8C5A2B;height:3px;background-image:linear-gradient(90deg,#8C5A2B 50%,transparent 0);background-size:12px 3px"></span><strong>Unpaved Trail</strong> — gravel or natural-surface paths.</div>
+  <div class="line-row"><span class="line" style="background:#8C2BBE;height:3px;background-image:linear-gradient(90deg,#8C2BBE 50%,transparent 0);background-size:10px 3px"></span><strong>Mountain Bike Trail</strong> — single-track / MTB routes.</div>
+
+  <h3>The 14 point-of-interest icons</h3>
+  <div class="legend">
+    <div><span class="swatch">🚲</span> Bike Parking</div>
+    <div><span class="swatch">🚴</span> Capital Bikeshare</div>
+    <div><span class="swatch">🔧</span> Fix-it Stand</div>
+    <div><span class="swatch">🏪</span> Bike Sales & Repairs</div>
+    <div><span class="swatch">💧</span> Water Fill Station</div>
+    <div><span class="swatch">🚻</span> Public Restroom</div>
+    <div><span class="swatch">🟢</span> Trail Access Point</div>
+    <div><span class="swatch">Ⓜ️</span> Metro Station</div>
+    <div><span class="swatch">🚆</span> Commuter Rail</div>
+    <div><span class="swatch">🏀</span> DC Rec Center</div>
+    <div><span class="swatch">🏛</span> Landmark / Attraction</div>
+    <div><span class="swatch">🔓</span> Bike Theft (report)</div>
+    <div><span class="swatch">⚠️</span> Cyclist Accident</div>
+    <div><span class="swatch">❌</span> Fatal Accident</div>
+  </div>
+
+  <h3>Tapping a point</h3>
+  <p>Tap any marker → a sheet slides up with the category, full title,
+  description, and the contributor's username. Every imported point has a
+  reference code (e.g. <code>BP4231</code>) so you can quote it when reporting
+  a problem.</p>
+
+  <h3>Layers — show or hide categories</h3>
+  <p>Tap the hamburger icon (top-left) to open the Bike Map legend.</p>
+  <ul>
+    <li>Each row is a toggle. Tap to show / hide that category.</li>
+    <li><strong>Show all</strong> — turn every category on.</li>
+    <li><strong>Clear map</strong> — turn every category off.</li>
+  </ul>
+  <p>By default, rare/loud layers (Unpaved Trail, Mountain Bike Trail) and the
+  report layers (Theft, Accidents) are off — the map looks clean on first launch.</p>
+
+  <h3>Map gestures</h3>
+  <ul>
+    <li>Pan: drag with one finger.</li>
+    <li>Zoom: pinch, or double-tap to zoom in, two-finger-tap to zoom out.</li>
+    <li>Recenter on yourself: tap the navigation arrow (bottom-right).</li>
+    <li>Zoom controls: + and − buttons (bottom-right).</li>
+  </ul>
+</section>
+
+<section id="find">
+  <h2>Finding stuff fast</h2>
+  <div class="tip">
+    <strong>Tip:</strong> isolate one layer for a single-purpose view —
+    turn off everything except <strong>🚲 Bike Parking</strong> and the
+    map becomes a parking-only finder. Same trick works for any category.
+  </div>
+  <ul>
+    <li>Need a bike rack? Toggle off everything except 🚲 Bike Parking.</li>
+    <li>Headed to a Metro? Turn on 🅼 Metro and zoom to your destination.</li>
+    <li>Bottle empty? Turn on 💧 Water Fill Stations.</li>
+    <li>Need a fix? Turn on 🔧 Fix-it Stand — most are 24/7 with a pump + tools.</li>
+  </ul>
+</section>
+
+<section id="contrib">
+  <h2>Contributing to the map</h2>
+  <p>You can add new points or file reports as long as you're physically within
+  5 miles of downtown DC (we check by GPS to keep submissions honest).</p>
+
+  <h3>Add a new point</h3>
+  <ol>
+    <li>Open the legend (hamburger icon).</li>
+    <li>Tap the blue <strong>Add point</strong> button at the bottom.</li>
+    <li>Pick a category.</li>
+    <li>The blue banner "Tap the map to add a point" appears.</li>
+    <li>Tap roughly where the point is, then drag the pin to fine-tune.</li>
+    <li>Fill in a Title (required) and an optional Description.</li>
+    <li>Tap <strong>Add [category]</strong>.</li>
+  </ol>
+  <p>A moderator reviews every submission before it appears publicly.</p>
+
+  <h3>Report a bike theft</h3>
+  <ol>
+    <li>Open the legend → tap the red <strong>Report Theft</strong> button.</li>
+    <li>Read the safety reminder and tap Confirm.</li>
+    <li>Tap the location on the map.</li>
+    <li>Fill in: incident date/time, description, optional photo, and
+      <strong>contact info (required)</strong> so the community can reach you.</li>
+    <li>Tap <strong>Report Theft</strong>.</li>
+    <li>If it was less than 24 h ago, choose "Yes, alert" to push-notify
+      nearby BikeMap users.</li>
+  </ol>
+  <div class="tip">
+    <strong>Important:</strong> BikeMap is community help, not a police report.
+    Always file a police report with MPD too.
+  </div>
+
+  <h3>Report a cyclist accident</h3>
+  <ol>
+    <li>Open the legend → tap the orange <strong>Report Accident</strong>
+      button.</li>
+    <li>"If anyone is injured or in danger, call 911 immediately" — tap
+      Continue.</li>
+    <li>Tap the location, drag the pin, fill in Title + Description.</li>
+    <li>Tap <strong>Add Cyclist Accidents</strong>.</li>
+  </ol>
+</section>
+
+<section id="account">
+  <h2>Managing your account</h2>
+
+  <h3>My Profile</h3>
+  <p>Tap your avatar in the top-right corner of the map. You'll see:</p>
+  <ul>
+    <li>Avatar, username, edit pencil</li>
+    <li>Administrator Panel (admins only — see below)</li>
+    <li>My bikes — with photos, brand, color, etc.</li>
+    <li>Contributions — every approved point you've submitted, with its
+      reference code</li>
+    <li>Total points (drives the ranking)</li>
+    <li>Sign out</li>
+  </ul>
+
+  <h3>Register a bike</h3>
+  <ol>
+    <li>My Profile → <strong>Register your bike</strong>.</li>
+    <li>Tap the photo placeholder to attach an image from your gallery.</li>
+    <li>Fill in nickname, type (Conventional or E-bike), brand, color, wheel
+      size, serial number, and identifying details.</li>
+    <li>Tap <strong>Register bike</strong>.</li>
+  </ol>
+  <p><strong>Why register?</strong> If your bike is stolen, you'll have every
+  detail ready for the police report, the manufacturer, and the community
+  alert.</p>
+
+  <h3>Edit your profile</h3>
+  <p>My Profile → blue pencil. You can change:</p>
+  <ul>
+    <li>Avatar (5×2 grid — tap to select)</li>
+    <li>Language — System, English, or Español</li>
+    <li>Change password</li>
+    <li>Delete account (Danger zone)</li>
+  </ul>
+
+  <h3>Delete your account</h3>
+  <p>Edit Profile → Danger zone → <strong>Delete account</strong> → confirm.
+  Your profile, bikes, and photos are deleted permanently. Your map
+  contributions stay on the map anonymously.</p>
+
+  <h3>Ranking</h3>
+  <p>Tap the trophy icon (top-right of the map). 🥇 🥈 🥉 for the top 3
+  contributors. Your row is highlighted with "(you)".</p>
+</section>
+
+<section id="notifs">
+  <h2>Notifications</h2>
+  <p>If you grant notification permission, you'll receive:</p>
+  <ul>
+    <li><strong>Bike theft alerts</strong> when a new theft is reported within
+      ~24 h near your location.</li>
+    <li><strong>Moderation alerts</strong> (admins only) when new submissions
+      need review — plus a red dot on your avatar.</li>
+  </ul>
+  <p>Manage notifications anytime in your phone's Settings → Apps →
+  BikeMap DC → Notifications.</p>
+</section>
+
+<section id="mod">
+  <h2>For moderators</h2>
+  <p>If your account is flagged as an admin, you'll see a red dot on your
+  avatar (top-right of the map) when there are pending submissions, and an
+  <strong>Administrator Panel</strong> tile right under your profile card with
+  a count.</p>
+
+  <h3>Reviewing a submission</h3>
+  <p>Tap <strong>Administrator Panel</strong> → each pending point has a
+  mini-map, description, author, and a 3-button row:</p>
+  <ul>
+    <li><strong>Edit before approving</strong> (blue) — fix title, description,
+      or pin location.</li>
+    <li><strong>Reject</strong> (gray/red) — discards the submission (doesn't
+      count against the author's ranking).</li>
+    <li><strong>Approve</strong> (green) — publishes to the map (increments
+      the author's contribution count).</li>
+  </ul>
+
+  <h3>Editing or deleting a published point</h3>
+  <p>Tap any pin on the map → the Map Point sheet → Edit icon (top-left of the
+  sheet), or <strong>Delete point</strong> in the Danger zone at the bottom.</p>
+</section>
+
+<section id="tips">
+  <h2>Tips & tricks</h2>
+  <ul>
+    <li>Long tap a marker to keep the sheet open while you look up the address.</li>
+    <li>Want a clean route map? Turn off all POI categories — just cycle routes
+      remain.</li>
+    <li>Pinch and zoom into a dense area (e.g. Logan Circle) to see individual
+      bike parking racks.</li>
+    <li>If GPS is acting up, the navigation arrow re-centers you at the
+      Washington Monument as a fallback.</li>
+    <li>If you're more than 10 miles from DC, the app opens at the Washington
+      Monument instead of your location.</li>
+    <li>Every imported point has a reference code in its title. Spot an
+      outdated one? Email <a href="mailto:bikemap.dc@gmail.com">bikemap.dc@gmail.com</a>
+      with the code.</li>
+  </ul>
+</section>
+
+<section id="contact">
+  <h2>Got questions?</h2>
+  <p>📧 <a href="mailto:bikemap.dc@gmail.com">bikemap.dc@gmail.com</a> —
+  we reply within 1–2 business days.</p>
+  <p>Found a bug? Have a feature idea? Want to be a moderator? Email us.
+  Include your phone model, app version, and a screenshot if relevant.</p>
+  <p>Privacy &amp; data sources: <a href="privacy.html">read the privacy policy</a>.</p>
+</section>
+
+</main>
+
+<footer>
+  Thanks for riding with BikeMap DC. 🚴
+</footer>
+
+</body>
+</html>
+</content>

@@ -1,0 +1,186 @@
+═══════════════════════════════════════════════════════════════════
+BIKEMAP DC — PRIVACY POLICY
+Effective: 2026-05-13
+═══════════════════════════════════════════════════════════════════
+
+Copy-paste recipe for Google Sites:
+  1. https://sites.google.com → Blank → name the site "BikeMap DC"
+  2. Header: change title to "BikeMap DC — Privacy Policy"
+     Add page (left toolbar → Pages → +): "Privacy"
+  3. Click into the Privacy page body. For each "===" block below,
+     insert a Heading 1, then paste the block text as paragraphs / lists.
+     Bullet lists are pre-formatted with "•" — Google Sites turns these
+     into proper bullets automatically if you press Enter between lines.
+  4. Top-right "Publish" → choose a web address like  bikemapdc
+     → URL becomes  https://sites.google.com/view/bikemapdc/privacy
+  5. Paste that URL into App Store Connect → App Information →
+     Privacy Policy URL, and into the Android Play Console listing.
+
+
+
+═══ Summary ═══
+
+BikeMap DC is a community-curated cycling map for the Washington, D.C.
+metro area. We collect the minimum data needed to operate the app. We
+do not sell data, run ads, or share personal information with third
+parties for marketing.
+
+
+
+═══ Information we collect ═══
+
+Account information
+• Email address — used as your login identifier.
+• Username — public, shown as the author of any contributions you submit.
+• Password — stored only as a salted hash. We can't see it.
+• Avatar — your choice from our preset DC-fauna avatars.
+
+Location
+• Your device location is read in the foreground only, with permission,
+  to center the map on you and to verify that new contributions are
+  submitted from within the DC metro area.
+• Your live location is NOT stored on our servers. It is only used
+  in-memory while the app is running.
+• Coordinates of points you submit (bike parking, theft reports, etc.)
+  are saved with the point so they can appear on the map.
+
+Bikes you register
+• Bike nickname, brand, color, wheel size, serial number, free-form
+  details, and an optional photo. Stored on your account and only
+  visible to you. It exists so you have your bike's info on hand if
+  it gets stolen.
+
+Contributions
+• Points of interest, theft reports, and accident reports you submit
+  are stored on our servers and shown publicly on the map once approved
+  by a moderator. The username you chose is attributed to your
+  contributions.
+
+Push notification token
+• If you grant notification permission, we store the device push token
+  tied to your user ID so we can send you alerts about nearby bike
+  thefts or, for moderators, new submissions awaiting review.
+
+
+
+═══ How we use the information ═══
+
+• To authenticate you and let you save bikes and submit contributions.
+• To render the map (your location → recenter; submitted points →
+  public map).
+• To notify users in the area when a theft is reported, and to notify
+  moderators about new submissions awaiting review.
+• To prevent abuse — we may rate-limit accounts that submit clearly
+  invalid data.
+
+We do NOT:
+• Sell your data, ever.
+• Run advertising or analytics SDKs that profile users.
+• Share information with third parties for marketing.
+
+
+
+═══ How long we keep it ═══
+
+• Your account, bikes, and photos: until you delete your account.
+• Push tokens: until you sign out or the OS invalidates them.
+• Contributions: indefinitely, but they are anonymized when you delete
+  your account (your username is replaced with a generic placeholder
+  so the public map stays useful to the community).
+
+
+
+═══ Deleting your account ═══
+
+In the app: tap your avatar (top-right of the map) → Edit Profile
+(blue pencil) → Delete account in the Danger zone. Your profile,
+bikes, and photos are deleted permanently. Your map contributions stay
+on the map anonymously to preserve community data.
+
+If you can't access the app, email bikemap.dc@gmail.com from the
+address on your account and we will delete it within 7 days.
+
+
+
+═══ Service providers ═══
+
+We use Supabase (database, authentication, storage, serverless
+functions) to operate the app. Supabase processes data on our behalf
+under their privacy policy at https://supabase.com/privacy
+
+Map base tiles are served by OpenStreetMap contributors under the
+Open Database License (https://www.openstreetmap.org/copyright).
+
+
+
+═══ Sources of the map data ═══
+
+The bike infrastructure, points of interest, and crash information
+shown in BikeMap DC come from the public datasets listed below. We
+import these datasets periodically and attribute each row in our
+database to its original source.
+
+• DDOT — District Department of Transportation
+  Bike lanes (protected, conventional, contraflow, shared, etc.),
+  bike parking racks, and Capital Bikeshare station registry.
+  Source: https://opendata.dc.gov  and  DDOT GIS services at
+  https://maps2.dcgis.dc.gov/dcgis/rest/services/DDOT
+
+• DCGIS — DC Geographic Information System
+  Metrorail stations, MARC and VRE commuter rail stops, signed bike
+  routes, and DC Parks & Recreation facilities.
+  Source: https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA
+
+• Capital Bikeshare
+  Live station locations and capacity via the public GBFS feed at
+  https://gbfs.capitalbikeshare.com/gbfs/gbfs.json
+  (we use station information only — never real-time bike-availability
+  data).
+
+• WMATA — Washington Metropolitan Area Transit Authority
+  Metrorail station roster cross-referenced from the official WMATA
+  system map at https://www.wmata.com/schedules/maps
+
+• MPD — Metropolitan Police Department / Vision Zero
+  Cyclist injury and fatality crash data from the District's "Crashes
+  in DC" dataset for the past four years.
+  Source: https://opendata.dc.gov/datasets/DCGIS::crashes-in-dc
+  (layer published by DCGIS / MPD).
+
+• OpenStreetMap (OSM)
+  Bike shops, fix-it stands, drinking-water stations, trail access
+  points, mountain-bike trails, and bus/bike shared lanes. Contributed
+  by thousands of volunteer mappers under the Open Database License
+  at https://www.openstreetmap.org/copyright
+
+• goDCgo DC Bike Map
+  The legend categories and geographic coverage area in BikeMap DC
+  mirror the official goDCgo regional bike map at https://godcgo.com
+
+Note: imported data is provided "as is" by each source and may contain
+errors, gaps, or out-of-date information. If you find something wrong
+on the map, email bikemap.dc@gmail.com with the point's reference code
+(e.g. BP4231) and we'll fix it.
+
+
+
+═══ Children ═══
+
+BikeMap DC is not directed at children under 13. We do not knowingly
+collect personal data from children under 13. If you believe a child
+has submitted personal data, email us and we will delete it promptly.
+
+
+
+═══ Changes to this policy ═══
+
+If we make material changes we will update the "Effective" date at the
+top of this page and notify users via an in-app banner the next time
+they open the app. Continued use after a change constitutes acceptance.
+
+
+
+═══ Contact ═══
+
+Questions, requests, or data-deletion appeals:
+bikemap.dc@gmail.com

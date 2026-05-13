@@ -1,0 +1,330 @@
+═══════════════════════════════════════════════════════════════════
+BIKEMAP DC — USER GUIDE
+═══════════════════════════════════════════════════════════════════
+
+Copy-paste recipe for Google Sites:
+  1. In the BikeMap DC site, add a new page (left toolbar → Pages
+     → + → name it "User Guide").
+  2. For each "═══" section below, insert a Heading 1, then paste
+     the section as paragraphs / bullet lists.
+  3. Subsections marked "▶" should be Heading 2 for a tidy outline.
+  4. Republish. URL will be:
+     https://sites.google.com/view/bikemapdc/user-guide
+
+
+
+═══ Welcome to BikeMap DC ═══
+
+BikeMap DC is a community-powered cycling map for the Washington,
+D.C. metro area. It pulls together everything a cyclist needs to
+plan a trip, find a parking rack, fix a flat, or report a problem —
+all in one place, on your phone.
+
+What you'll find on the map:
+• 5,500+ bike-infrastructure segments — protected lanes, bike
+  lanes, contraflow lanes, bus/bike lanes, shared lanes, signed
+  routes, off-street trails, unpaved trails, and mountain-bike
+  trails.
+• 5,700+ points of interest — bike parking, Capital Bikeshare
+  stations, fix-it stands, bike shops, water fountains, public
+  restrooms, Metro stations, commuter-rail stops, recreation
+  centers, and landmarks.
+• 1,700+ cyclist crash locations from the past 4 years (MPD Vision
+  Zero data).
+• Your fellow cyclists' contributions — bike thefts, new fix-it
+  stands, recent accidents.
+
+Coverage area: DC + Bethesda · Silver Spring · Tysons · McLean ·
+Arlington · Falls Church · Alexandria · Capitol Heights ·
+College Park · Hyattsville · New Carrollton · Suitland.
+
+
+
+═══ Getting started ═══
+
+▶ Create your account
+1. Open the app.
+2. Tap "Create account".
+3. Pick a username (this is what your contributions are signed
+   with) and a password (at least 6 characters).
+4. Choose one of our 10 DC-fauna avatars — bobcat, cardinal, crow,
+   eagle, fox, otter, owl, raccoon, skunk, or squirrel.
+5. Tap "Create account". You're in.
+
+▶ Sign in
+Use the email and password you registered with. Tap the eye icon
+to reveal your password if you need to check it.
+
+Forgot your password? Tap "Forgot my password" and we'll email you
+a reset link.
+
+
+
+═══ Reading the map ═══
+
+▶ The 9 cycle-route line styles
+
+Open the legend at any time by tapping the hamburger icon (top-left).
+Each route type has a distinct color and dash style:
+
+• Protected Bike Lane — solid dark green. Physically separated
+  from traffic by a curb, planter, or barrier.
+• Bike Lane — solid black. A painted, dedicated lane on the road.
+• Contraflow Lane — dark with short ticks. Lets bikes go against
+  the flow of a one-way street.
+• Bus/Bike Lane — dark with a dot-rect pattern. Shared with
+  transit buses; no cars.
+• Shared Lane (Sharrow) — dashed dark. No dedicated space —
+  arrows on the pavement remind drivers cyclists may take the lane.
+• On-Street Signed Route — small gray dots. Marked with route
+  signs but no painted lane.
+• Off-Street Trail — solid light green. Paved multi-use path
+  (e.g. Capital Crescent, Mt Vernon, Anacostia Riverwalk).
+• Unpaved Trail — brown dashes. Gravel or natural-surface paths.
+• Mountain Bike Trail — purple dashes. Single-track / MTB routes.
+
+▶ The 14 point-of-interest icons
+
+Each amenity has its own emoji marker in a white circle:
+🚲 Bike Parking   🚴 Capital Bikeshare   🔧 Fix-it Stand
+🏪 Bike Sales & Repairs   💧 Water Fill Station
+🚻 Public Restroom   🟢 Trail Access Point
+🅼 Metro Station   🚆 Commuter Rail   🏀 DC Rec Center
+🏛 Landmark / Attraction
+🔓 Bike Theft   ⚠️ Cyclist Accident   ❌ Fatal Accident
+
+▶ Tapping a point
+Tap any marker → a sheet slides up with the category, full title,
+description, and the contributor's username. Tap "Close" to dismiss.
+
+Every imported point has a reference code (e.g. BP4231 for the
+4,231st Bike Parking row) so you can quote it when reporting a
+problem.
+
+▶ Layers — show or hide categories
+Tap the hamburger icon (top-left) to open the Bike Map legend.
+• Each row is a toggle. Tap to show / hide that category.
+• "Show all" — turn every category on.
+• "Clear map" — turn every category off.
+By default the loud-but-rare layers (Unpaved Trail and Mountain
+Bike Trail) and the report layers (Theft, Accidents) are off, so
+the map looks clean on first launch.
+
+▶ Map gestures
+• Pan: drag with one finger.
+• Zoom: pinch, or double-tap to zoom in, two-finger-tap to zoom
+  out.
+• Recenter on yourself: tap the navigation arrow (bottom-right).
+• Zoom controls: + and − buttons (bottom-right).
+
+
+
+═══ Finding stuff fast ═══
+
+Need a bike parking rack? Toggle off everything except 🚲 Bike
+Parking — your map turns into a parking-only view. Same trick
+works for Capital Bikeshare, water fountains, or any other
+category.
+
+Headed to a Metro? Turn on the 🅼 Metro layer and zoom to your
+destination — every station shows up.
+
+Bottle empty? Turn on 💧 Water Fill Stations.
+
+Need a fix? Turn on 🔧 Fix-it Stand — most are 24/7 and include a
+pump + tools.
+
+
+
+═══ Contributing to the map ═══
+
+You can add new points or file reports as long as you're physically
+within 5 miles of downtown DC (we check by GPS to keep submissions
+honest).
+
+▶ Add a new point
+1. Open the legend (hamburger icon).
+2. Tap the blue "Add point" button at the bottom.
+3. Pick a category (Bike Parking, Fix-it Stand, etc.).
+4. The blue banner "Tap the map to add a point" appears at the top.
+5. Tap roughly where the point is.
+6. The New Point sheet opens. Drag the pin to fine-tune the exact
+   location.
+7. Fill in a Title (required — e.g. "Whole Foods bike racks") and
+   an optional Description.
+8. Tap "Add [category]".
+
+A moderator reviews every submission before it appears publicly.
+You'll see a confirmation toast: "✅ Point submitted! It will be
+reviewed by an admin before appearing on the map."
+
+▶ Report a bike theft
+1. Open the legend → tap the red "Report Theft" button.
+2. Read the safety reminder and tap "Confirm".
+3. The red banner "Tap the map where the theft happened" appears.
+4. Tap the location, then drag the pin if needed.
+5. Fill in:
+   • Date and time of the incident (we offer to alert nearby
+     users if the theft was less than 24 h ago)
+   • Description — what happened, bike features, suspects
+   • Bike photo (optional, helpful for recovery)
+   • Contact info (required — phone or email so the community
+     can reach you)
+6. Tap "Report Theft" at the bottom.
+7. If the incident was recent, you'll be asked: "Alert the
+   community?" — choosing "Yes, alert" sends a push notification
+   to nearby BikeMap users.
+
+Remember: BikeMap is community help, NOT a police report. Always
+file a police report with MPD too — your theft report includes a
+reminder of this.
+
+▶ Report a cyclist accident
+1. Open the legend → tap the orange "Report Accident" button.
+2. Read the safety reminder ("If anyone is injured or in danger,
+   call 911 immediately") and tap "Continue".
+3. Tap the location on the map.
+4. Drag the pin, fill in Title + Description.
+5. Tap "Add Cyclist Accidents".
+
+
+
+═══ Managing your account ═══
+
+▶ My Profile
+Tap your avatar in the top-right corner of the map to open My
+Profile. You'll see:
+• Your avatar, username, and edit pencil (blue)
+• Administrator Panel (admins only — see below)
+• My bikes — registered bikes with photos, brand, color, etc.
+• Contributions — every point you've submitted that's been
+  approved, with its reference code
+• Total points (your contribution count — drives the ranking)
+• Sign out
+
+▶ Register a bike
+1. My Profile → "Register your bike" (or "Add new bikes" if you
+   already have one).
+2. Tap the photo placeholder to attach a picture from your
+   gallery.
+3. Fill in nickname, type (Conventional or E-bike), brand, color,
+   wheel size, serial number, and any identifying details
+   (stickers, scratches, components).
+4. Tap "Register bike".
+
+Why register? If your bike is stolen, you'll have every detail at
+your fingertips for the police report, the manufacturer's stolen
+registry, and the community alert.
+
+▶ Edit your profile
+My Profile → blue pencil. You can change:
+• Your avatar (5×2 grid — tap to select)
+• Language — System (follows iOS/Android), English, or Español
+• Change password (current → new, with confirmation)
+• Delete account (Danger zone)
+
+▶ Delete your account
+Edit Profile → Danger zone → "Delete account" → confirm.
+
+Your profile, bikes, and uploaded photos are deleted permanently.
+Your map contributions stay on the map anonymously to preserve
+community data.
+
+▶ Ranking
+Tap the trophy icon (top-right of the map) to see the leaderboard:
+• 🥇 🥈 🥉 medals for the top 3 contributors
+• Total points = number of your contributions that have been
+  approved by a moderator
+• Your row is highlighted with "(you)"
+
+
+
+═══ Notifications ═══
+
+If you grant notification permission, you'll receive:
+• Bike theft alerts when a new theft is reported within ~24 h
+  near your location.
+• Moderation alerts (admins only) when new submissions need
+  review — and a red dot appears on your avatar in the map.
+
+Manage notifications anytime in your phone's Settings → Apps →
+BikeMap DC → Notifications.
+
+
+
+═══ For moderators ═══
+
+If your account is flagged as an admin, you'll see:
+• A red badge on your avatar (top-right of the map) when there
+  are pending submissions.
+• An "Administrator Panel" tile right under your profile card
+  with a count of pending reviews.
+
+▶ Reviewing a submission
+Tap Administrator Panel → you'll see every pending point with
+its mini-map, description, author, and a 3-button row:
+• "Edit before approving" (blue) — fix the title, description,
+  or pin location before publishing
+• "Reject" (gray/red) — discard the submission (doesn't count
+  against the author's ranking)
+• "Approve" (green) — publish to the map (increments the
+  author's contribution count)
+
+▶ Editing a published point
+Tap any pin → the Map Point sheet → "Edit" icon (top-left of the
+sheet) — same form as the moderation flow, available on every
+published point.
+
+▶ Deleting a point
+Same Map Point sheet → "Delete point" tile in the Danger zone →
+confirm. The point is removed from the map for all users.
+
+
+
+═══ Tips & tricks ═══
+
+• Long tap a marker to keep the sheet open while you look up the
+  address.
+• Want a clean route map? Turn off all POI categories — just
+  cycle routes remain.
+• Pinch and zoom into a dense area (e.g. Logan Circle) to see
+  individual bike parking racks.
+• If GPS is acting up, the navigation arrow re-centers you at the
+  Washington Monument as a fallback.
+• If you're more than 10 miles from DC, the app opens at the
+  Washington Monument instead of your location — so the map is
+  still useful when you're remote.
+• Every imported point has a reference code in its title. If you
+  spot an outdated one, screenshot it and email
+  bikemap.dc@gmail.com with the code.
+
+
+
+═══ Privacy & data sources ═══
+
+We collect the minimum data needed to run the app, and we never
+sell it. Full details at:
+https://sites.google.com/view/bikemapdc/privacy
+
+Map data comes from:
+• DDOT (DC Department of Transportation)
+• DCGIS (DC Geographic Information System)
+• Capital Bikeshare GBFS feed
+• WMATA (Metro)
+• MPD Vision Zero (Crashes in DC)
+• OpenStreetMap contributors
+• goDCgo
+
+Full attribution on the Privacy page.
+
+
+
+═══ Got questions? ═══
+
+📧 bikemap.dc@gmail.com — we reply within 1–2 business days.
+
+Found a bug? Have a feature idea? Want to be a moderator? Email
+us. Include your phone model, app version, and a screenshot if
+relevant.
+
+Thanks for riding with BikeMap DC. 🚴

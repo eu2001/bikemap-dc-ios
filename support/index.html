@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BikeMap DC — Support</title>
+<style>
+  :root {
+    --green: #1F8C33;
+    --ink: #1a1a1a;
+    --muted: #5b6470;
+    --line: #e5e7eb;
+    --bg: #f7f8fa;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink); background: var(--bg);
+  }
+  header {
+    background: white; border-bottom: 1px solid var(--line);
+    padding: 28px 24px;
+  }
+  header .wrap {
+    max-width: 740px; margin: 0 auto;
+    display: flex; align-items: center; gap: 16px;
+  }
+  header img { width: 64px; height: 64px; border-radius: 12px; }
+  header h1 { margin: 0; font-size: 24px; }
+  header p  { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
+  main {
+    max-width: 740px; margin: 0 auto; padding: 32px 24px 80px;
+  }
+  section {
+    background: white; border-radius: 14px;
+    padding: 22px 24px; margin-bottom: 18px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  h2 { margin: 0 0 12px; font-size: 18px; }
+  h3 { margin: 18px 0 6px; font-size: 15px; }
+  p, li { color: var(--ink); }
+  ul { padding-left: 22px; margin: 6px 0; }
+  a { color: var(--green); text-decoration: none; font-weight: 500; }
+  a:hover { text-decoration: underline; }
+  .pill {
+    display: inline-block; padding: 4px 10px;
+    background: rgba(31,140,51,0.12); color: var(--green);
+    border-radius: 14px; font-size: 13px; font-weight: 600;
+  }
+  .email { font-size: 17px; font-weight: 600; }
+  footer {
+    text-align: center; color: var(--muted); font-size: 13px; padding: 20px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <img src="logo.png" alt="BikeMap DC logo" onerror="this.style.display='none'">
+    <div>
+      <h1>BikeMap DC</h1>
+      <p>The DC Collaborative Bike Map</p>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section>
+    <h2>Need help?</h2>
+    <p>
+      We respond to every message within 1&ndash;2 business days. The best way to
+      reach us is by email:
+    </p>
+    <p class="email">📧 <a href="mailto:bikemap.dc@gmail.com">bikemap.dc@gmail.com</a></p>
+    <p>
+      Please include your phone model, the app version, and a short description of
+      what you were trying to do. Screenshots help a lot.
+    </p>
+  </section>
+
+  <section>
+    <h2>About BikeMap DC</h2>
+    <p>
+      BikeMap DC is a community-curated cycling map for the Washington, D.C. metro
+      area. It shows every protected bike lane, conventional bike lane, bus/bike
+      lane, contraflow lane, signed route, off-street trail, mountain bike trail,
+      and unpaved trail across DC, Arlington, Alexandria, Falls Church, Tysons,
+      Bethesda, Silver Spring, College Park, and Prince George's County. It also
+      pins thousands of <strong>Capital Bikeshare</strong> stations,
+      <strong>fix-it stands</strong>, <strong>bike shops</strong>, <strong>water
+      fountains</strong>, <strong>Metro stations</strong>, and
+      <strong>commuter-rail stops</strong> — plus a layer of
+      cyclist accident locations from the past four years of DC Vision Zero data.
+    </p>
+    <p>
+      Users in the DC area can contribute new points and report bike thefts or
+      cyclist accidents. All submissions are reviewed by a moderator before
+      appearing on the map.
+    </p>
+  </section>
+
+  <section>
+    <h2>Quick how-to</h2>
+
+    <h3>I can't sign up</h3>
+    <ul>
+      <li>Use an email address you control — confirmation is automatic.</li>
+      <li>Pick a username that isn't taken. Usernames are case-insensitive.</li>
+      <li>Passwords must be at least 6 characters.</li>
+    </ul>
+
+    <h3>The map looks empty</h3>
+    <ul>
+      <li>Check the Layers panel (hamburger icon, top-left). All cycle-route
+        categories except Unpaved&nbsp;Trail and Mountain&nbsp;Bike&nbsp;Trail
+        are on by default.</li>
+      <li>If POIs (Bike Parking, Capital Bikeshare, etc.) don't load, kill
+        and reopen the app — the first sync needs a stable connection.</li>
+    </ul>
+
+    <h3>Adding a point or report</h3>
+    <ul>
+      <li>You can only add new points or file theft / accident reports while
+        you are physically within 5&nbsp;miles of downtown DC.</li>
+      <li>Tap the map exactly where the point is, drag the pin to fine-tune,
+        then fill in the title and submit.</li>
+      <li>All submissions are reviewed by a moderator and usually appear on
+        the map within 24 hours.</li>
+    </ul>
+
+    <h3>I want to delete my account</h3>
+    <ul>
+      <li>Tap your avatar (top-right of the map) → Edit Profile (blue pencil)
+        → "Delete account" in the Danger zone.</li>
+      <li>Your profile, registered bikes, and photos are deleted permanently.
+        Your map contributions remain anonymously on the map so they stay
+        useful to the community.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Privacy</h2>
+    <p>
+      We collect the minimum needed to run a community map: your email and chosen
+      username for sign-in, your registered bikes (so you have their info handy if
+      stolen), and your approximate location while the app is in the foreground (so
+      points can be pinned where you are). We never sell data and never run ads.
+    </p>
+    <p>
+      Full privacy policy:
+      <a href="https://sites.google.com/view/bikemapdc/privacy">https://sites.google.com/view/bikemapdc/privacy</a>
+    </p>
+  </section>
+
+  <section>
+    <h2>Report a problem with the map</h2>
+    <p>
+      Found an outdated bike lane, a missing fix-it stand, or a wrong location?
+      <a href="mailto:bikemap.dc@gmail.com?subject=Report%20Error%20-%20BikeMap%20DC">Email us</a>
+      with the point's reference code (e.g. <code>BP4231</code>) — every point in
+      the app shows its code in the title for easy reference.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  &copy; BikeMap DC. Built with public data from DDOT, DCGIS, Capital Bikeshare,
+  WMATA, and OpenStreetMap contributors.
+</footer>
+
+</body>
+</html>
+</content>

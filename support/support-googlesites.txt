@@ -1,0 +1,143 @@
+═══════════════════════════════════════════════════════════════════
+BIKEMAP DC — SUPPORT
+═══════════════════════════════════════════════════════════════════
+
+Copy-paste recipe for Google Sites:
+  1. In the same site you created for the privacy policy
+     (https://sites.google.com → BikeMap DC), add a new page:
+     left toolbar → Pages → + → name it "Support" (or use this
+     as the HOME page, with Privacy as a sub-page).
+  2. Click into the Support page body. For each "═══" section
+     below, insert a Heading 1, then paste the section as paragraphs
+     or bullet lists. Lines starting with "•" become bullets after
+     you press Enter.
+  3. (Optional) Add the GW-on-bike logo to the header banner.
+  4. Top-right "Publish" → URL becomes
+     https://sites.google.com/view/bikemapdc/support
+  5. Paste that URL into App Store Connect → App Information →
+     Support URL (replacing the dead SJC link).
+
+
+
+═══ Need help? ═══
+
+We respond to every message within 1–2 business days. The best way
+to reach us is by email:
+
+📧 bikemap.dc@gmail.com
+
+Please include your phone model, the app version, and a short
+description of what you were trying to do. Screenshots help a lot.
+
+
+
+═══ About BikeMap DC ═══
+
+BikeMap DC is a community-curated cycling map for the Washington,
+D.C. metro area. It shows every protected bike lane, conventional
+bike lane, bus/bike lane, contraflow lane, signed route, off-street
+trail, mountain bike trail, and unpaved trail across DC, Arlington,
+Alexandria, Falls Church, Tysons, Bethesda, Silver Spring, College
+Park, and Prince George's County.
+
+It also pins thousands of:
+• Capital Bikeshare stations
+• Fix-it repair stands
+• Bike shops
+• Drinking-water stations
+• Metro and commuter-rail stations
+• Cyclist crash locations from the past 4 years of DC Vision Zero data
+
+Users in the DC area can contribute new points and report bike thefts
+or cyclist accidents. All submissions are reviewed by a moderator
+before appearing on the map.
+
+
+
+═══ Quick how-to ═══
+
+I can't sign up
+• Use an email address you control — confirmation is automatic.
+• Pick a username that isn't taken. Usernames are case-insensitive.
+• Passwords must be at least 6 characters.
+
+The map looks empty
+• Check the Layers panel (hamburger icon, top-left). All cycle-route
+  categories except Unpaved Trail and Mountain Bike Trail are on
+  by default.
+• If POIs (Bike Parking, Capital Bikeshare, etc.) don't load, kill
+  and reopen the app — the first sync needs a stable connection.
+
+Adding a point or report
+• You can only add new points or file theft / accident reports while
+  you are physically within 5 miles of downtown DC.
+• Tap the map exactly where the point is, drag the pin to fine-tune,
+  then fill in the title and submit.
+• All submissions are reviewed by a moderator and usually appear on
+  the map within 24 hours.
+
+I want to delete my account
+• Tap your avatar (top-right of the map) → Edit Profile (blue pencil)
+  → "Delete account" in the Danger zone.
+• Your profile, registered bikes, and photos are deleted permanently.
+  Your map contributions remain anonymously on the map so they stay
+  useful to the community.
+
+
+
+═══ Privacy ═══
+
+We collect the minimum needed to run a community map: your email and
+chosen username for sign-in, your registered bikes (so you have their
+info handy if stolen), and your approximate location while the app is
+in the foreground (so points can be pinned where you are). We never
+sell data and never run ads.
+
+Full privacy policy:
+https://sites.google.com/view/bikemapdc/privacy
+
+
+
+═══ Report a problem with the map ═══
+
+Found an outdated bike lane, a missing fix-it stand, or a wrong
+location?
+
+Email bikemap.dc@gmail.com with the point's reference code (every
+point in the app shows its code in the title for easy reference):
+
+• BP#### — Bike Parking
+• CB### — Capital Bikeshare
+• BS### — Bike Shop
+• FS### — Fix-it Stand
+• M### — Metro Station
+• CR### — Commuter Rail
+• RC### — DC Recreation Center
+• LM### — Landmark
+• WF### — Water Fill Station
+• TA### — Trail Access Point
+• T### — Bike Theft Report
+• A#### — Cyclist Accident
+• AM### — Fatal Cyclist Accident
+
+
+
+═══ Acknowledgements ═══
+
+BikeMap DC is built with public data from:
+• DDOT — DC Department of Transportation
+• DCGIS — DC Geographic Information System
+• Capital Bikeshare (GBFS)
+• WMATA — Washington Metropolitan Area Transit Authority
+• MPD Vision Zero — Crashes in DC dataset
+• OpenStreetMap contributors
+
+We're grateful to the open-data teams that keep these datasets
+publicly available.
+
+
+
+═══ Contact ═══
+
+Email: bikemap.dc@gmail.com
+We reply within 1–2 business days.
