@@ -4,7 +4,7 @@ struct ContactView: View {
     @Environment(\.dismiss) private var dismiss
 
     private let adminEmail = "bikemap.dc@gmail.com"
-    private let userGuideURL = URL(string: "https://sites.google.com/view/bikemapdc/user-guide")!
+    private let userGuideURL = URL(string: "https://eu2001.github.io/bikemap-dc-web/guide.html")!
 
     var body: some View {
         NavigationStack {
