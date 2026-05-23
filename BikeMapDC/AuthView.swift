@@ -133,6 +133,49 @@ struct AuthView: View {
                     Text("My bikes (\(appState.bikes.count))")
                 }
 
+                // MARK: Notifications
+                if !appState.notifications.isEmpty {
+                    Section("Notifications") {
+                        ForEach(appState.notifications.prefix(10)) { entry in
+                            Button {
+                                Task { await appState.openNotification(entry) }
+                                dismiss()
+                            } label: {
+                                HStack(spacing: 12) {
+                                    Text(notificationIcon(for: entry.type))
+                                        .font(.title3)
+                                        .frame(width: 36, height: 36)
+                                        .background(Color.blue.opacity(0.12),
+                                                    in: RoundedRectangle(cornerRadius: 8))
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        HStack(spacing: 6) {
+                                            Text(entry.title)
+                                                .font(.subheadline.weight(.medium))
+                                                .lineLimit(1)
+                                                .foregroundStyle(.primary)
+                                            if entry.read_at == nil {
+                                                Circle().fill(Color.blue)
+                                                    .frame(width: 6, height: 6)
+                                            }
+                                        }
+                                        Text(entry.created_at.formatted(date: .abbreviated, time: .shortened))
+                                            .font(.caption)
+                                            .foregroundStyle(.secondary)
+                                    }
+                                    Spacer()
+                                    if entry.poi_id != nil {
+                                        Image(systemName: "chevron.right")
+                                            .font(.caption.weight(.semibold))
+                                            .foregroundStyle(.secondary)
+                                    }
+                                }
+                                .padding(.vertical, 2)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                }
+
                 // MARK: Estatísticas + Pontos contribuídos (unified)
                 Section("Contributions (\(appState.userPOIs.count))") {
                     if let profile = appState.currentProfile {
@@ -191,6 +234,7 @@ struct AuthView: View {
                 loadingBikes = true
                 await appState.fetchBikes()
                 await appState.fetchUserPOIs()
+                await appState.fetchNotifications()
                 loadingBikes = false
             }
             .sheet(isPresented: $showAddBike) {
@@ -284,5 +328,14 @@ struct AuthView: View {
             }
         }
         .padding(.vertical, 2)
+    }
+
+    private func notificationIcon(for type: String) -> String {
+        switch type {
+        case "furto_alert":  return "🚨"
+        case "poi_approved": return "✅"
+        case "poi_rejected": return "🗑️"
+        default:             return "🔔"
+        }
     }
 }

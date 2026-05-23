@@ -174,9 +174,10 @@ enum POIType: String, CaseIterable, Codable {
         switch self {
         case .capital_bikeshare, .fixit_stand, .bike_shop,
              .secure_parking, .water_fill, .restroom, .trail_access,
-             .furto, .acidente_ferido:
+             .furto:
             return true
-        case .metrorail, .commuter_rail, .rec_center, .landmark, .acidente_morte:
+        case .metrorail, .commuter_rail, .rec_center, .landmark,
+             .acidente_ferido, .acidente_morte:
             return false
         }
     }

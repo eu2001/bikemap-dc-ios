@@ -3,7 +3,6 @@ import SwiftUI
 struct LayersPanelView: View {
     @ObservedObject var appState: AppState
     @State private var showFurtoAlert    = false
-    @State private var showAcidenteAlert = false
     @State private var showTypePicker    = false
     @State private var showOutOfArea     = false
 
@@ -114,7 +113,11 @@ struct LayersPanelView: View {
                                 showOutOfArea = true
                             }
                         } label: {
-                            Label("Report Theft", systemImage: "lock.open.fill")
+                            Label {
+                                Text("Alert Community")
+                            } icon: {
+                                Text("🚨")
+                            }
                                 .font(.subheadline.weight(.semibold))
                                 .foregroundStyle(.white)
                                 .frame(maxWidth: .infinity)
@@ -123,7 +126,7 @@ struct LayersPanelView: View {
                                 .padding(.horizontal, 10)
                                 .padding(.vertical, 4)
                         }
-                        .alert("Report Bike Theft", isPresented: $showFurtoAlert) {
+                        .alert("Alert the community?", isPresented: $showFurtoAlert) {
                             Button("Cancel", role: .cancel) { }
                             Button("Confirm", role: .destructive) {
                                 appState.pendingPOIType = .furto
@@ -133,38 +136,9 @@ struct LayersPanelView: View {
                                 }
                             }
                         } message: {
-                            Text("This will alert community members about the incident. Remember to file a police report.")
+                            Text("This will notify other community members about a missing bike in the area.")
                         }
 
-                        // Reportar Acidente — light orange background, white text
-                        Button {
-                            if appState.userIsInContributionArea {
-                                showAcidenteAlert = true
-                            } else {
-                                showOutOfArea = true
-                            }
-                        } label: {
-                            Label("Report Accident", systemImage: "exclamationmark.triangle.fill")
-                                .font(.subheadline.weight(.semibold))
-                                .foregroundStyle(.white)
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 12)
-                                .background(Color.orange.opacity(0.7), in: RoundedRectangle(cornerRadius: 10))
-                                .padding(.horizontal, 10)
-                                .padding(.vertical, 4)
-                        }
-                        .alert("Report Cyclist Accident", isPresented: $showAcidenteAlert) {
-                            Button("Cancel", role: .cancel) { }
-                            Button("Continue", role: .destructive) {
-                                appState.pendingPOIType = .acidente_ferido
-                                withAnimation(.spring(response: 0.35)) { appState.showSidebar = false }
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                                    appState.mapPickingMode = .addPoint
-                                }
-                            }
-                        } message: {
-                            Text("If anyone is injured or in danger, call 911 immediately before reporting here.")
-                        }
 
                         // Shared "out of contribution area" alert — fires
                         // when the user is > 5 mi from DC and tries to add

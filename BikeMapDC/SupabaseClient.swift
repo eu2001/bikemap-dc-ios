@@ -18,12 +18,25 @@ struct ProfileRow: Codable {
     var contributionCount: Int
     var isPremium: Bool
     var isAdmin: Bool
+    var isBlocked: Bool
 
     enum CodingKeys: String, CodingKey {
         case id, username, avatar
         case contributionCount = "contribution_count"
         case isPremium = "is_premium"
         case isAdmin   = "is_admin"
+        case isBlocked = "is_blocked"
+    }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id                = try c.decode(UUID.self,   forKey: .id)
+        username          = try c.decode(String.self, forKey: .username)
+        avatar            = try c.decode(String.self, forKey: .avatar)
+        contributionCount = try c.decode(Int.self,    forKey: .contributionCount)
+        isPremium         = try c.decode(Bool.self,   forKey: .isPremium)
+        isAdmin           = try c.decode(Bool.self,   forKey: .isAdmin)
+        isBlocked         = (try? c.decode(Bool.self, forKey: .isBlocked)) ?? false
     }
 }
 

@@ -59,6 +59,31 @@ struct WelcomeView: View {
                     .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 20))
                     .padding(.horizontal, 20)
 
+                    // MARK: Browse without account (Apple 5.1.1(v) compliance)
+                    Button {
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            appState.guestAccess = true
+                        }
+                    } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "map")
+                            Text("Continue as a guest")
+                        }
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(.blue)
+                        .padding(.vertical, 14)
+                        .frame(maxWidth: .infinity)
+                    }
+                    .padding(.top, 14)
+                    .padding(.horizontal, 20)
+
+                    Text("You can sign in later to add points, report thefts, or register your bikes.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 32)
+                        .padding(.top, -4)
+
                 }
                 .padding(.bottom, 40)
             }

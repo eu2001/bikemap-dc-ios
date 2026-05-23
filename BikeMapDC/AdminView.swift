@@ -8,7 +8,25 @@ struct AdminView: View {
     @State private var pendingPOIs: [POI] = []
     @State private var loading      = true
     @State private var processingId: String? = nil
-    @State private var editingPOI: POI? = nil
+    @State private var processingKind: ProcessKind? = nil
+    @State private var rejectingPOI: POI? = nil
+
+    private enum ProcessKind { case approve, reject }
+
+    // Furto reports embed the photo as a "🖼️ <url>" line in the description.
+    // Helpers to extract / strip it so the admin can preview the photo.
+    private static let photoRegex = try! NSRegularExpression(pattern: "🖼️\\s*(https?://\\S+)")
+    fileprivate static func extractPhotoURL(_ text: String) -> URL? {
+        let range = NSRange(text.startIndex..., in: text)
+        guard let m = photoRegex.firstMatch(in: text, range: range),
+              let r = Range(m.range(at: 1), in: text) else { return nil }
+        return URL(string: String(text[r]))
+    }
+    fileprivate static func stripPhotoURL(_ text: String) -> String {
+        let range = NSRange(text.startIndex..., in: text)
+        return photoRegex.stringByReplacingMatches(in: text, range: range, withTemplate: "")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+    }
 
     var body: some View {
         NavigationStack {
@@ -53,14 +71,22 @@ struct AdminView: View {
                 }
             }
             .task { await reload() }
-            .sheet(item: $editingPOI) { poi in
-                AdminEditPOISheet(appState: appState, poi: poi) { updated in
-                    // Replace the row in our local pending list with the
-                    // edited values so the card refreshes.
-                    if let idx = pendingPOIs.firstIndex(where: { $0.id == updated.id }) {
-                        pendingPOIs[idx] = updated
-                    }
+            .confirmationDialog(
+                "Reject this point?",
+                isPresented: Binding(
+                    get: { rejectingPOI != nil },
+                    set: { if !$0 { rejectingPOI = nil } }
+                ),
+                titleVisibility: .visible,
+                presenting: rejectingPOI
+            ) { poi in
+                Button("Reject and delete", role: .destructive) {
+                    rejectingPOI = nil
+                    Task { await reject(poi) }
                 }
+                Button("Cancel", role: .cancel) { rejectingPOI = nil }
+            } message: { _ in
+                Text("Permanently removes the point. It will not appear on the map or count toward the contributor's ranking.")
             }
         }
         .presentationDetents([.large])
@@ -117,9 +143,28 @@ struct AdminView: View {
             .clipShape(RoundedRectangle(cornerRadius: 10))
             .disabled(true)
 
-            // Description
-            if !poi.description.isEmpty {
-                Text(poi.description)
+            // Photo (extracted from description) — admin needs to see it before approving
+            if let photoURL = Self.extractPhotoURL(poi.description) {
+                AsyncImage(url: photoURL) { phase in
+                    switch phase {
+                    case .empty:
+                        ProgressView().frame(maxWidth: .infinity, minHeight: 120)
+                    case .success(let img):
+                        img.resizable().scaledToFit().cornerRadius(10)
+                    case .failure:
+                        Label("Photo unavailable", systemImage: "photo.badge.exclamationmark")
+                            .font(.caption).foregroundStyle(.secondary)
+                    @unknown default:
+                        EmptyView()
+                    }
+                }
+                .frame(maxHeight: 220)
+            }
+
+            // Description (with photo URL stripped so the link doesn't show twice)
+            let descText = Self.stripPhotoURL(poi.description)
+            if !descText.isEmpty {
+                Text(descText)
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .lineLimit(5)
@@ -130,43 +175,50 @@ struct AdminView: View {
                 .font(.caption2)
                 .foregroundStyle(.tertiary)
 
-            // Edit button (full width, above approve/reject)
-            Button {
-                editingPOI = poi
-            } label: {
-                Label("Edit before approving", systemImage: "pencil.circle.fill")
-                    .font(.subheadline.weight(.semibold))
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 10)
-                    .background(Color.blue.opacity(0.12), in: RoundedRectangle(cornerRadius: 10))
-                    .foregroundStyle(.blue)
-            }
-            .disabled(processingId != nil)
-
-            // Action buttons
+            // Action buttons — `.borderless` so SwiftUI treats each Button as
+            // its own tap target. Without this, a List row with multiple
+            // Buttons routes any tap to the first one (Reject).
             HStack(spacing: 10) {
                 Button {
-                    Task { await reject(poi) }
+                    rejectingPOI = poi
                 } label: {
-                    Label("Reject", systemImage: "xmark.circle.fill")
-                        .font(.subheadline.weight(.semibold))
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 10)
-                        .background(Color(.systemGray5), in: RoundedRectangle(cornerRadius: 10))
-                        .foregroundStyle(.red)
+                    if processingId == poi.id && processingKind == .reject {
+                        ProgressView()
+                            .tint(.red)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 10)
+                            .background(Color(.systemGray5), in: RoundedRectangle(cornerRadius: 10))
+                    } else {
+                        Label("Reject", systemImage: "xmark.circle.fill")
+                            .font(.subheadline.weight(.semibold))
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 10)
+                            .background(Color(.systemGray5), in: RoundedRectangle(cornerRadius: 10))
+                            .foregroundStyle(.red)
+                    }
                 }
+                .buttonStyle(.borderless)
                 .disabled(processingId != nil)
 
                 Button {
                     Task { await approve(poi) }
                 } label: {
-                    Label("Approve", systemImage: "checkmark.circle.fill")
-                        .font(.subheadline.weight(.semibold))
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 10)
-                        .background(Color.green, in: RoundedRectangle(cornerRadius: 10))
-                        .foregroundStyle(.white)
+                    if processingId == poi.id && processingKind == .approve {
+                        ProgressView()
+                            .tint(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 10)
+                            .background(Color.green, in: RoundedRectangle(cornerRadius: 10))
+                    } else {
+                        Label("Approve", systemImage: "checkmark.circle.fill")
+                            .font(.subheadline.weight(.semibold))
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 10)
+                            .background(Color.green, in: RoundedRectangle(cornerRadius: 10))
+                            .foregroundStyle(.white)
+                    }
                 }
+                .buttonStyle(.borderless)
                 .disabled(processingId != nil)
             }
         }
@@ -183,6 +235,7 @@ struct AdminView: View {
 
     private func approve(_ poi: POI) async {
         processingId = poi.id
+        processingKind = .approve
         do {
             try await appState.approvePOI(poi)
             pendingPOIs.removeAll { $0.id == poi.id }
@@ -190,10 +243,12 @@ struct AdminView: View {
             appState.showToast("❌ Could not approve. Try again.")
         }
         processingId = nil
+        processingKind = nil
     }
 
     private func reject(_ poi: POI) async {
         processingId = poi.id
+        processingKind = .reject
         do {
             try await appState.rejectPOI(poi)
             pendingPOIs.removeAll { $0.id == poi.id }
@@ -201,147 +256,6 @@ struct AdminView: View {
             appState.showToast("❌ Could not reject. Try again.")
         }
         processingId = nil
-    }
-}
-
-// MARK: - Edit Sheet
-//
-// Lets the admin fix the title / description and drag the map to relocate
-// the pin before approving.
-
-private struct AdminEditPOISheet: View {
-    @ObservedObject var appState: AppState
-    @Environment(\.dismiss) private var dismiss
-    let poi: POI
-    let onSaved: (POI) -> Void
-
-    @State private var title:       String
-    @State private var description: String
-    @State private var coord:       CLLocationCoordinate2D
-    @State private var mapPosition: MapCameraPosition
-    @State private var saving       = false
-    @State private var errorMsg     = ""
-
-    init(appState: AppState, poi: POI, onSaved: @escaping (POI) -> Void) {
-        self.appState = appState
-        self.poi = poi
-        self.onSaved = onSaved
-        _title       = State(initialValue: poi.title)
-        _description = State(initialValue: poi.description)
-        _coord       = State(initialValue: poi.coordinate)
-        _mapPosition = State(initialValue: .region(MKCoordinateRegion(
-            center: poi.coordinate,
-            span: .init(latitudeDelta: 0.004, longitudeDelta: 0.004)
-        )))
-    }
-
-    var body: some View {
-        NavigationStack {
-            Form {
-                Section {
-                    HStack {
-                        Image(systemName: "mappin.circle.fill").foregroundStyle(.red)
-                        Text(String(format: "%.5f, %.5f", coord.latitude, coord.longitude))
-                            .font(.subheadline.monospacedDigit())
-                            .foregroundStyle(.secondary)
-                    }
-
-                    ZStack {
-                        Map(position: $mapPosition)
-                            .onMapCameraChange(frequency: .continuous) { context in
-                                coord = context.region.center
-                            }
-                        VStack(spacing: 0) {
-                            Image(systemName: "mappin")
-                                .font(.system(size: 30, weight: .bold))
-                                .foregroundStyle(.red)
-                                .shadow(color: .black.opacity(0.3), radius: 2, y: 1)
-                            Spacer().frame(height: 30)
-                        }
-                        .allowsHitTesting(false)
-                    }
-                    .frame(height: 220)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                    .listRowInsets(.init(top: 8, leading: 0, bottom: 8, trailing: 0))
-                    .padding(.horizontal, -4)
-
-                    Text("Drag the map to fine-tune the pin location.")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                } header: {
-                    Text("Location")
-                }
-
-                Section("Point type") {
-                    Label {
-                        Text(poi.poiType.label).foregroundStyle(.primary)
-                    } icon: {
-                        Text(poi.poiType.emoji)
-                    }
-                }
-
-                Section("Info") {
-                    TextField("Title", text: $title)
-                    TextField("Description", text: $description, axis: .vertical)
-                        .lineLimit(3...8)
-                }
-
-                if !errorMsg.isEmpty {
-                    Section {
-                        Label(errorMsg, systemImage: "xmark.circle.fill")
-                            .foregroundStyle(.red)
-                            .font(.caption)
-                    }
-                }
-            }
-            .navigationTitle("Edit point")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button("Cancel") { dismiss() }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        Task { await save() }
-                    } label: {
-                        if saving { ProgressView() } else {
-                            Text("Save").fontWeight(.semibold)
-                        }
-                    }
-                    .disabled(saving || title.trimmingCharacters(in: .whitespaces).isEmpty)
-                }
-            }
-        }
-        .presentationDetents([.large])
-        .presentationDragIndicator(.visible)
-    }
-
-    private func save() async {
-        let trimmedTitle = title.trimmingCharacters(in: .whitespaces)
-        guard !trimmedTitle.isEmpty else {
-            errorMsg = "Title cannot be empty."
-            return
-        }
-        saving = true; errorMsg = ""
-        do {
-            try await appState.updatePOIContent(
-                poi,
-                title: trimmedTitle,
-                description: description,
-                lat: coord.latitude,
-                lng: coord.longitude,
-            )
-            let updated = POI(
-                id: poi.id, type: poi.type,
-                lat: coord.latitude, lng: coord.longitude,
-                title: trimmedTitle, description: description,
-                author: poi.author, createdAt: poi.createdAt
-            )
-            onSaved(updated)
-            dismiss()
-        } catch {
-            errorMsg = "Could not save. Please try again."
-        }
-        saving = false
+        processingKind = nil
     }
 }

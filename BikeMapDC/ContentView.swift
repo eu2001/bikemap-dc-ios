@@ -28,6 +28,19 @@ struct ContentView: View {
             header
                 .padding(.top, topSafeArea)
 
+            // MARK: Unread community-alert banner
+            if !appState.unreadAlerts.isEmpty {
+                VStack {
+                    Spacer().frame(height: topSafeArea + 56)
+                    unreadAlertBanner
+                    Spacer()
+                }
+                .padding(.horizontal, 12)
+                .transition(.move(edge: .top).combined(with: .opacity))
+                .animation(.spring(response: 0.35), value: appState.unreadAlerts.count)
+                .zIndex(3)
+            }
+
             // MARK: Offline banner
             if !network.isConnected {
                 VStack {
@@ -59,6 +72,19 @@ struct ContentView: View {
             }
             .frame(maxWidth: .infinity, alignment: .trailing)
             .ignoresSafeArea(edges: .bottom)
+
+            // MARK: Furto banner (in-app alert when an admin approves a recent stolen-bike POI)
+            if let banner = appState.furtoBanner {
+                VStack {
+                    furtoBannerView(banner)
+                        .padding(.top, topSafeArea + 4)
+                        .padding(.horizontal, 12)
+                    Spacer()
+                }
+                .transition(.move(edge: .top).combined(with: .opacity))
+                .animation(.spring(response: 0.45, dampingFraction: 0.85), value: appState.furtoBanner)
+                .zIndex(50)
+            }
 
             // MARK: Toast
             if let msg = appState.toastMessage {
@@ -145,6 +171,41 @@ struct ContentView: View {
         }
     }
 
+    // MARK: - Unread alert banner
+
+    @ViewBuilder
+    private var unreadAlertBanner: some View {
+        VStack(spacing: 6) {
+            ForEach(appState.unreadAlerts.prefix(3)) { alert in
+                Button {
+                    Task { await appState.openAlert(alert) }
+                } label: {
+                    HStack(spacing: 10) {
+                        Text("🚨").font(.title3)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(alert.title)
+                                .font(.subheadline.weight(.semibold))
+                                .foregroundStyle(.primary)
+                                .lineLimit(1)
+                            Text("Tap to see the location")
+                                .font(.caption2)
+                                .foregroundStyle(.secondary)
+                        }
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .font(.caption.weight(.semibold))
+                            .foregroundStyle(.secondary)
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 10)
+                    .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
+                    .shadow(color: .black.opacity(0.15), radius: 6, x: 0, y: 2)
+                }
+                .buttonStyle(.plain)
+            }
+        }
+    }
+
     // MARK: - Header bar
 
     private var header: some View {
@@ -201,7 +262,13 @@ struct ContentView: View {
                 }
                 let _ = name  // suppress warning
             } else {
-                Button { appState.showAuth = true } label: {
+                Button {
+                    // Guest tapping "Sign in" returns to the welcome screen
+                    // (with sign-in / create-account / browse-as-guest).
+                    withAnimation(.easeInOut(duration: 0.3)) {
+                        appState.guestAccess = false
+                    }
+                } label: {
                     Text("Sign in")
                         .font(.subheadline)
                         .fontWeight(.medium)
@@ -275,6 +342,66 @@ struct ContentView: View {
         switch appState.mapPickingMode {
         case .addPoint: return String(localized: "Tap the map to add a point")
         case .none:     return ""
+        }
+    }
+
+    // MARK: - Furto banner
+
+    private func furtoBannerView(_ banner: AppState.FurtoBanner) -> some View {
+        HStack(alignment: .top, spacing: 12) {
+            Text("🚨")
+                .font(.system(size: 28))
+                .padding(.top, 2)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(banner.title)
+                    .font(.subheadline.weight(.bold))
+                    .foregroundStyle(.white)
+                    .lineLimit(2)
+                Text(banner.body)
+                    .font(.caption)
+                    .foregroundStyle(.white.opacity(0.95))
+                    .lineLimit(3)
+            }
+            Spacer(minLength: 0)
+            Button {
+                withAnimation { appState.furtoBanner = nil }
+            } label: {
+                Image(systemName: "xmark.circle.fill")
+                    .font(.title3)
+                    .foregroundStyle(.white.opacity(0.85))
+            }
+        }
+        .padding(12)
+        .background(
+            LinearGradient(colors: [Color(red: 0.85, green: 0.15, blue: 0.15),
+                                    Color(red: 0.65, green: 0.05, blue: 0.05)],
+                           startPoint: .topLeading, endPoint: .bottomTrailing),
+            in: RoundedRectangle(cornerRadius: 14)
+        )
+        .shadow(color: .black.opacity(0.25), radius: 8, y: 3)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            // Open the POI by injecting it through selectedPOI.
+            if let poi = appState.pois.first(where: { $0.id == banner.poiId }) {
+                appState.selectedPOI = poi
+            } else {
+                // POI not in local array yet (the realtime UPDATE arrived first);
+                // synthesise a minimal POI so the detail sheet still opens.
+                appState.selectedPOI = POI(
+                    id: banner.poiId, type: POIType.furto.rawValue,
+                    lat: banner.lat, lng: banner.lng,
+                    title: banner.title, description: banner.body,
+                    author: "", createdAt: Date()
+                )
+            }
+            appState.furtoBanner = nil
+        }
+        .task(id: banner.id) {
+            // Auto-dismiss after 6 seconds if the user doesn't interact.
+            try? await Task.sleep(nanoseconds: 6_000_000_000)
+            if appState.furtoBanner?.id == banner.id {
+                withAnimation { appState.furtoBanner = nil }
+            }
         }
     }
 
@@ -371,6 +498,22 @@ struct POIDetailView: View {
         appState.pois.first(where: { $0.id == poi.id }) ?? poi
     }
 
+    /// Splits the description into (text-without-photo-line, photoURL?).
+    /// Furto reports embed the photo as a "🖼️ <url>" line in the description.
+    private func extractPhoto(_ text: String) -> (String, URL?) {
+        let pattern = "🖼️\\s*(https?://\\S+)"
+        guard let regex = try? NSRegularExpression(pattern: pattern) else { return (text, nil) }
+        let range = NSRange(text.startIndex..., in: text)
+        var photoURL: URL? = nil
+        if let m = regex.firstMatch(in: text, range: range),
+           let r = Range(m.range(at: 1), in: text) {
+            photoURL = URL(string: String(text[r]))
+        }
+        let stripped = regex.stringByReplacingMatches(in: text, range: range, withTemplate: "")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        return (stripped, photoURL)
+    }
+
     var body: some View {
         NavigationStack {
             List {
@@ -385,9 +528,30 @@ struct POIDetailView: View {
                     .padding(.vertical, 4)
                 }
 
-                if !currentPOI.description.isEmpty {
+                let (descNoPhoto, photoURL) = extractPhoto(currentPOI.description)
+
+                if let photoURL {
+                    Section("Photo") {
+                        AsyncImage(url: photoURL) { phase in
+                            switch phase {
+                            case .empty:
+                                ProgressView().frame(maxWidth: .infinity, minHeight: 180)
+                            case .success(let img):
+                                img.resizable().scaledToFit().cornerRadius(8)
+                            case .failure:
+                                Label("Could not load photo", systemImage: "photo.badge.exclamationmark")
+                                    .foregroundStyle(.secondary)
+                            @unknown default:
+                                EmptyView()
+                            }
+                        }
+                        .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
+                    }
+                }
+
+                if !descNoPhoto.isEmpty {
                     Section("Description") {
-                        Text(currentPOI.description)
+                        Text(descNoPhoto)
                     }
                 }
 
@@ -447,6 +611,11 @@ struct POIDetailView: View {
                 }
             } message: {
                 Text("This will permanently remove “\(currentPOI.title)” from the map. This action cannot be undone.")
+            }
+            // Once the user actually sees the theft details, clear the
+            // unread badge on the app icon.
+            .onAppear {
+                if currentPOI.poiType == .furto { AppDelegate.clearBadge() }
             }
         }
         .presentationDetents([.medium])

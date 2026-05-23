@@ -79,3 +79,13 @@ screenshots/
 *.p8
 .env
 .env.*
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Xcode build output
+build/
+
+# Supabase CLI scratch
+supabase/.temp/

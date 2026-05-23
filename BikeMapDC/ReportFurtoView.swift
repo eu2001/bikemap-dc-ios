@@ -194,8 +194,11 @@ struct ReportFurtoView: View {
                             if loading {
                                 ProgressView().tint(.white)
                             } else {
-                                Label("Report Theft", systemImage: "lock.open.fill")
-                                    .fontWeight(.semibold)
+                                Label {
+                                    Text("Alert Community").fontWeight(.semibold)
+                                } icon: {
+                                    Text("🚨")
+                                }
                             }
                         }
                         .frame(maxWidth: .infinity)
@@ -292,7 +295,8 @@ struct ReportFurtoView: View {
             type: .furto,
             coordinate: coord,
             title: poiTitle,
-            description: fullDesc
+            description: fullDesc,
+            incidentAt: incidentDate
         )
 
         appState.pendingAddCoordinate = nil

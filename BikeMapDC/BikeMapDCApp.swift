@@ -30,6 +30,7 @@ struct BikeMapDCApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject private var appState = AppState()
     @State private var showSplash = true
+    @Environment(\.scenePhase) private var scenePhase
     @AppStorage("appLanguage") private var appLanguageRaw: String = AppLanguage.system.rawValue
 
     private var appLocale: Locale {
@@ -40,7 +41,7 @@ struct BikeMapDCApp: App {
         WindowGroup {
             ZStack {
                 Group {
-                    if appState.currentUserName != nil {
+                    if appState.currentUserName != nil || appState.guestAccess {
                         ContentView(appState: appState)
                             .transition(.opacity)
                     } else {
@@ -49,6 +50,7 @@ struct BikeMapDCApp: App {
                     }
                 }
                 .animation(.easeInOut(duration: 0.3), value: appState.currentUserName)
+                .animation(.easeInOut(duration: 0.3), value: appState.guestAccess)
 
                 if showSplash {
                     SplashView()
@@ -71,6 +73,21 @@ struct BikeMapDCApp: App {
             // Navigate to POI when notification is tapped
             .onChange(of: appState.notificationTargetPOI) { _, poi in
                 // ContentView observes this via appState directly
+            }
+            // Clear the app icon badge whenever the app becomes active
+            // and auto-open the latest unread furto so users who open the
+            // app from the home screen (not via push tap) land on the new
+            // stolen-bike point.
+            .onChange(of: scenePhase) { _, phase in
+                if phase == .active {
+                    AppDelegate.clearBadge()
+                    Task { await appState.openLatestUnreadFurtoIfAny() }
+                    // Re-check the profile so admin block/delete actions
+                    // log the user out on next foreground.
+                    if let uid = appState.currentUserId {
+                        Task { await appState.fetchProfile(userId: uid) }
+                    }
+                }
             }
         }
     }
@@ -123,9 +140,19 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
                             author: "", createdAt: nil)
             DispatchQueue.main.async {
                 self.appState?.notificationTargetPOI = poi
+                AppDelegate.clearBadge()
             }
         }
         completionHandler()
+    }
+
+    /// Clear the app icon badge. Called on notification tap and when the
+    /// app becomes active so the red dot disappears after the user has
+    /// seen the new theft alert.
+    static func clearBadge() {
+        UNUserNotificationCenter.current().setBadgeCount(0) { error in
+            if let error { print("clearBadge error: \(error)") }
+        }
     }
 }
 
